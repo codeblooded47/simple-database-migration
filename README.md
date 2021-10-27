@@ -59,5 +59,7 @@ Run run.bat file in your terminal.
 
 ### For Running continuously 
 - User windows Schedule. [how](https://www.geeksforgeeks.org/schedule-a-python-script-to-run-daily/) 
+- 
 
-
+### License
+Simple Database Migration is open source project licensed as [MIT](https://github.com/codeblooded47/simple-database-migration/blob/master/LICENSE)
