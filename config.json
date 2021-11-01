@@ -1,16 +1,16 @@
 {
     "mssql": {
         "DRIVER": "{ODBC Driver 17 for SQL Server}",
-        "SERVER": "tcp:212.111.234.84:1433",
-        "DATABASE": "filaksplus",
-        "USERNAME": "sa-cmundp-ro",
-        "PASSWORD": "yNB5CasUpL!TV9QNg"
+        "SERVER": "",
+        "DATABASE": "",
+        "USERNAME": "",
+        "PASSWORD": ""
     },
     "mysql": {
-        "SERVER": "plesk.cramer-mueller-partner.de:3306",
-        "DATABASE": "schafferfilaks",
-        "USERNAME": "cmp-mysql-admin",
-        "PASSWORD": "F9JcXX6yG%Mxsnn@Zd"
+        "SERVER": "",
+        "DATABASE": "",
+        "USERNAME": "",
+        "PASSWORD": ""
     },
     "migration": {
         "table": "table",
