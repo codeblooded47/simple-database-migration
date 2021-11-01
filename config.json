@@ -1,19 +1,19 @@
 {
-  "firebird": {
-    "username": "sysdba",
-    "password": "masterkey",
-    "host": "localhost",
-    "db_path": "C:/Users/youname/Desktop/firebird/firebird-db/examples.fdb"
-  },
-  "mssql": {
-    "DRIVER": "{ODBC Driver 17 for SQL Server}",
-    "SERVER": "tcp:your-mssql-url.database.windows.net",
-    "DATABASE": "firebird",
-    "USERNAME": "firebird",
-    "PASSWORD": "password"
-  },
-  "migration": {
-    "table": "table",
-    "type": "replace"
-  }
+    "mssql": {
+        "DRIVER": "{ODBC Driver 17 for SQL Server}",
+        "SERVER": "",
+        "DATABASE": "",
+        "USERNAME": "",
+        "PASSWORD": ""
+    },
+    "mysql": {
+        "SERVER": "",
+        "DATABASE": "",
+        "USERNAME": "",
+        "PASSWORD": ""
+    },
+    "migration": {
+        "table": "table",
+        "type": "replace"
+    }
 }
