@@ -3,7 +3,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import sqlalchemy
-import fdb
+import pyodbc 
 from sqlalchemy import create_engine
 import json
 import pandas as pd
@@ -16,28 +16,20 @@ if __name__ == '__main__':
     f.close()
 
     print('Migrating..')
-    fb_url = "firebird://%s:%s@%s/%s"%(config["firebird"]["username"],config["firebird"]["password"],config["firebird"]["host"],config["firebird"]["db_path"])
-    firebird_engine = create_engine(fb_url)
-    firebird_engine.connect()
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+config["mssql"]["SERVER"]+';DATABASE='+config["mssql"]["DATABASE"]+';UID='+config["mssql"]["USERNAME"]+';PWD='+ config["mssql"]["PASSWORD"])
+    cursor = cnxn.cursor()
 
     # query file for firebird
     file = open("query.sql")
     query = text(file.read())
 
-    result = firebird_engine.execute(query)
+    result = cursor.execute(query)
     row = result.fetchall()
     pdframe = pd.DataFrame(row)
 
-    params = urllib.parse.quote_plus("DRIVER=%s;"
-                                        "SERVER=%s;"
-                                        "DATABASE=%s;"
-                                        "UID=%s;"
-                                        "PWD=%s" % (config["mssql"]["DRIVER"], config["mssql"]["SERVER"],
-                                                    config["mssql"]["DATABASE"], config["mssql"]["USERNAME"],
-                                                    config["mssql"]["PASSWORD"]))
-
-    sql_engine = create_engine("mssql+pyodbc:///?odbc_connect={}".format(params))
+    sql_engine = create_engine("mysql+mysqldb://%s:%s@%s/%s" % (config["mysql"]["USERNAME"], 
+                                                    config["mysql"]["PASSWORD"], config["mysql"]["SERVER"],
+                                                    config["mysql"]["DATABASE"]) )
 
     pdframe.to_sql(config["migration"]["table"], con=sql_engine, if_exists=config["migration"]["type"])
-    # dk = sql_engine.execute("SELECT * FROM NEWUSER").fetchall()
     print(pdframe)
