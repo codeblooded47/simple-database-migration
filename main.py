@@ -4,6 +4,7 @@
 
 import sqlalchemy
 import fdb
+import os
 from sqlalchemy import create_engine
 import json
 import pandas as pd
@@ -20,14 +21,6 @@ if __name__ == '__main__':
     firebird_engine = create_engine(fb_url)
     firebird_engine.connect()
 
-    # query file for firebird
-    file = open("query.sql")
-    query = text(file.read())
-
-    result = firebird_engine.execute(query)
-    row = result.fetchall()
-    pdframe = pd.DataFrame(row)
-
     params = urllib.parse.quote_plus("DRIVER=%s;"
                                         "SERVER=%s;"
                                         "DATABASE=%s;"
@@ -38,6 +31,16 @@ if __name__ == '__main__':
 
     sql_engine = create_engine("mssql+pyodbc:///?odbc_connect={}".format(params))
 
-    pdframe.to_sql(config["migration"]["table"], con=sql_engine, if_exists=config["migration"]["type"])
-    # dk = sql_engine.execute("SELECT * FROM NEWUSER").fetchall()
-    print(pdframe)
+    for sql in os.listdir("sql"):
+        if sql.endswith(".sql"):
+            file = open(os.path.join("sql", sql))
+            query = text(file.read())
+
+            result = firebird_engine.execute(query)
+            row = result.fetchall()
+            pdframe = pd.DataFrame(row)
+
+            tablename = sql.split(".")[0]
+
+            pdframe.to_sql(tablename, con=sql_engine, if_exists=config["migration"]["type"])
+            print(pdframe)
